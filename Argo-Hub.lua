@@ -80,13 +80,13 @@ MainTab:CreateSlider({Name = "WalkSpeed", Range = {0, 100}, Increment = 1, Curre
 MainTab:CreateToggle({Name = "Speed Toggle", CurrentValue = false, Callback = function(V) wallSpeedEnabled = V end})
 
 ---
---- 2. lag TAB (LAG SWITCH)
+--- 2. NETWORK TAB (LAG SWITCH)
 ---
-local LagSwitchTab = Window:CreateTab("LagSwitch", nil)
+local NetworkTab = Window:CreateTab("Lagswitch", nil)
 NetworkTab:CreateSection("Lag Switch Settings")
 NetworkTab:CreateDropdown({
    Name = "Lag Mode",
-   Options = {"Default", "Fast Flag (having trouble)"},
+   Options = {"Default", "Fast Flag but having trouble"},
    CurrentOption = {"Default"},
    MultipleOptions = false,
    Callback = function(Option)
