@@ -64,16 +64,29 @@ end
 --- 1. MAIN TAB
 ---
 local MainTab = Window:CreateTab("Main", nil)
+
+-- NÚT 1: Chạy script xóa tường từ link bạn đưa
 MainTab:CreateButton({
    Name = "Clear Invisible Walls",
    Callback = function()
-       for _, v in pairs(workspace:GetDescendants()) do
-           if v:IsA("BasePart") and v.Transparency > 0.1 and v.CanCollide == true then v.CanCollide = false end
-       end
-       Notify("Clean", "Obstacles cleared!")
+       Notify("Argo System", "Executing Invisible Walls Script...")
+       pcall(function()
+           loadstring(game:HttpGet("https://pastebin.com/raw/DP2ZtJPg"))()
+       end)
    end,
 })
-MainTab:CreateButton({Name = "Edge Script", Callback = function() pcall(function() loadstring(game:HttpGet("https://pastebin.com/raw/zk2zk5kV"))() end) end})
+
+-- NÚT 2: Chạy Edge Script từ link bạn đưa
+MainTab:CreateButton({
+    Name = "Edge Script", 
+    Callback = function() 
+        Notify("Argo System", "Executing Edge Script...")
+        pcall(function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/zk2zk5kV"))()
+        end)
+    end
+})
+
 MainTab:CreateSection("Movement")
 MainTab:CreateToggle({Name = "Auto bHop", CurrentValue = false, Callback = function(V) bHopEnabled = V end})
 MainTab:CreateSlider({Name = "WalkSpeed", Range = {0, 100}, Increment = 1, CurrentValue = 10, Callback = function(V) currentSpeed = V end})
@@ -147,11 +160,11 @@ VisualTab:CreateToggle({Name = "Headless", CurrentValue = false, Callback = func
 VisualTab:CreateToggle({Name = "Korblox", CurrentValue = false, Callback = function(V) korbloxEnabled = V end})
 
 ---
---- 5. MAP TAB (ĐÃ SỬA LỖI XÓA)
+--- 5. MAP TAB
 ---
 local MapTab = Window:CreateTab("Map", nil)
 local mapID = ""
-local spawnedMap = nil -- Biến lưu trữ object map
+local spawnedMap = nil 
 
 MapTab:CreateInput({
     Name = "Map ID", 
@@ -164,7 +177,6 @@ MapTab:CreateInput({
 MapTab:CreateButton({
     Name = "Create Map", 
     Callback = function() 
-        -- Nếu đã có map cũ thì xóa trước khi tạo mới
         if spawnedMap then spawnedMap:Destroy() spawnedMap = nil end
         local backup = workspace:FindFirstChild("Argo_CustomMap")
         if backup then backup:Destroy() end
@@ -173,7 +185,7 @@ MapTab:CreateButton({
             local obj = game:GetObjects("rbxassetid://" .. mapID)[1]
             if obj then
                 spawnedMap = obj
-                spawnedMap.Name = "Argo_CustomMap" -- Đặt tên để dễ tìm lại
+                spawnedMap.Name = "Argo_CustomMap"
                 spawnedMap.Parent = workspace
                 if spawnedMap:IsA("Model") then
                     spawnedMap:MoveTo(Vector3.new(0, 2500, 0))
@@ -200,13 +212,11 @@ MapTab:CreateButton({
 MapTab:CreateButton({
     Name = "Delete Map", 
     Callback = function() 
-        -- Xóa theo biến lưu trữ
         if spawnedMap then 
             spawnedMap:Destroy() 
             spawnedMap = nil 
             Notify("Map System", "Map deleted successfully.")
         else
-            -- Xóa theo tên trong workspace (dự phòng)
             local backup = workspace:FindFirstChild("Argo_CustomMap")
             if backup then
                 backup:Destroy()
@@ -283,4 +293,4 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
-Notify("Argo Hub", "Script Loaded Successfully!")
+Notify("Argo Hub", "Script Loaded Successfully!")	
